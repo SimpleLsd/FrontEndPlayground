@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {
-  Document,
   Menu as IconMenu,
   Location,
   Setting,
@@ -65,12 +64,12 @@ function handleClose(key: string, keyPath: string[]) {
         Navigator Two
       </template>
     </el-menu-item>
-    <el-menu-item index="3" disabled>
+    <el-menu-item index="mapTest">
       <el-icon>
-        <Document />
+        <Location />
       </el-icon>
       <template #title>
-        Navigator Three
+        Map Test
       </template>
     </el-menu-item>
     <el-menu-item index="/nav/4">
