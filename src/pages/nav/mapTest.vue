@@ -39,6 +39,9 @@ const CANVAS_HEIGHT = 440
 // 总动画数
 const TOTAL_LINES = 5
 
+// 颜色 RGB
+const COLOR = '0, 112, 80'
+
 // 动画速度参数
 const POINT_DURATION = 0.5 // 点出现时间（秒）
 const CURVE_DURATION = 0.5 // 曲线出现时间（秒）
@@ -102,7 +105,7 @@ onMounted(() => {
   function drawPoint(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, alpha: number): void {
     ctx.beginPath()
     ctx.arc(x, y, r, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(0, 112, 80, ${alpha * POINT_MAX_ALPHA})`
+    ctx.fillStyle = `rgba(${COLOR}, ${alpha * POINT_MAX_ALPHA})`
     ctx.fill()
   }
 
@@ -121,7 +124,7 @@ onMounted(() => {
       const y = (1 - t) ** 2 * start.y + 2 * (1 - t) * t * control.y + t ** 2 * end.y
       ctx.lineTo(x, y)
     }
-    ctx.strokeStyle = `rgba(0, 112, 80, ${alpha * CURVE_MAX_ALPHA})`
+    ctx.strokeStyle = `rgba(${COLOR}, ${alpha * CURVE_MAX_ALPHA})`
     ctx.lineWidth = 2
     ctx.stroke()
   }
@@ -155,8 +158,8 @@ onMounted(() => {
     const head = meteor.tail[meteor.tail.length - 1]
     const gradient = ctx.createLinearGradient(head.x, head.y, tail.x, tail.y)
 
-    gradient.addColorStop(0, `rgba(0, 112, 80, ${alpha * METEOR_MAX_ALPHA})`) // 头部亮
-    gradient.addColorStop(1, `rgba(0, 112, 80, 0)`) // 尾部透明
+    gradient.addColorStop(0, `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`) // 头部亮
+    gradient.addColorStop(1, `rgba(${COLOR}, 0)`) // 尾部透明
 
     ctx.strokeStyle = gradient
     ctx.stroke()
@@ -165,7 +168,7 @@ onMounted(() => {
   // 绘制彗星头部
   ctx.beginPath()
   ctx.arc(x, y, 2, 0, Math.PI * 2)
-  ctx.fillStyle = `rgba(0, 112, 80, ${alpha * METEOR_MAX_ALPHA})`
+  ctx.fillStyle = `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`
   ctx.fill()
   }
 
