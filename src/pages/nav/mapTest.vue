@@ -52,8 +52,8 @@ const METEOR_SPEED_FACTOR = 0.03 // 流星移动速度因子（秒/像素）
 const POINT_MAX_ALPHA = 1 // 点最大透明度（0-1）
 const CURVE_MAX_ALPHA = 0.15 // 曲线最大透明度（0-1）
 const METEOR_MAX_ALPHA = 1 // 流星最大透明度（0-1）
-const MIN_DISTANCE = 100   // 最小距离
-const MAX_DISTANCE = 400   // 最大距离
+const MIN_DISTANCE = 100 // 最小距离
+const MAX_DISTANCE = 400 // 最大距离
 
 const startPoints = mapMotionPoints.startPoints
 const endPoints = mapMotionPoints.endPoints
@@ -78,11 +78,11 @@ function createAnimation(): Animation {
   const midY = (start.y + end.y) / 2
 
   // 控制点偏移随距离增加
-  const baseOffset = 100                  // 基础偏移
-  const distanceFactor = distance * 0.3   // 距离越长，额外增加偏移
+  const baseOffset = 100 // 基础偏移
+  const distanceFactor = distance * 0.3 // 距离越长，额外增加偏移
   const totalOffset = baseOffset + distanceFactor
 
-  const controlX = midX 
+  const controlX = midX
   const controlY = midY + (Math.random() - 1.0) * totalOffset
 
   const startPoint: Point = { x: start.x, y: start.y, alpha: 0 }
@@ -130,46 +130,47 @@ onMounted(() => {
   }
 
   function drawMeteor(
-  ctx: CanvasRenderingContext2D,
-  t: number,
-  alpha: number,
-  meteor: Meteor,
-  start: Point,
-  control: Point,
-  end: Point
-): void {
-  const x = (1 - t) ** 2 * start.x + 2 * (1 - t) * t * control.x + t ** 2 * end.x
-  const y = (1 - t) ** 2 * start.y + 2 * (1 - t) * t * control.y + t ** 2 * end.y
+    ctx: CanvasRenderingContext2D,
+    t: number,
+    alpha: number,
+    meteor: Meteor,
+    start: Point,
+    control: Point,
+    end: Point,
+  ): void {
+    const x = (1 - t) ** 2 * start.x + 2 * (1 - t) * t * control.x + t ** 2 * end.x
+    const y = (1 - t) ** 2 * start.y + 2 * (1 - t) * t * control.y + t ** 2 * end.y
 
-  meteor.tail.push({ x, y, alpha:1})
-  if (meteor.tail.length > 600) meteor.tail.shift()
+    meteor.tail.push({ x, y, alpha: 1 })
+    if (meteor.tail.length > 600)
+      meteor.tail.shift()
 
-  if (meteor.tail.length > 1) {
+    if (meteor.tail.length > 1) {
     // 绘制彗尾
+      ctx.beginPath()
+      ctx.moveTo(meteor.tail[0].x, meteor.tail[0].y)
+      meteor.tail.forEach(p => ctx.lineTo(p.x, p.y))
+
+      // 尾部线宽
+      ctx.lineWidth = 2
+
+      // 用渐变做透明衰减
+      const tail = meteor.tail[0]
+      const head = meteor.tail[meteor.tail.length - 1]
+      const gradient = ctx.createLinearGradient(head.x, head.y, tail.x, tail.y)
+
+      gradient.addColorStop(0, `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`) // 头部亮
+      gradient.addColorStop(1, `rgba(${COLOR}, 0)`) // 尾部透明
+
+      ctx.strokeStyle = gradient
+      ctx.stroke()
+    }
+
+    // 绘制彗星头部
     ctx.beginPath()
-    ctx.moveTo(meteor.tail[0].x, meteor.tail[0].y)
-    meteor.tail.forEach(p => ctx.lineTo(p.x, p.y))
-
-    // 尾部线宽
-    ctx.lineWidth = 2
-
-    // 用渐变做透明衰减
-    const tail = meteor.tail[0]
-    const head = meteor.tail[meteor.tail.length - 1]
-    const gradient = ctx.createLinearGradient(head.x, head.y, tail.x, tail.y)
-
-    gradient.addColorStop(0, `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`) // 头部亮
-    gradient.addColorStop(1, `rgba(${COLOR}, 0)`) // 尾部透明
-
-    ctx.strokeStyle = gradient
-    ctx.stroke()
-  }
-
-  // 绘制彗星头部
-  ctx.beginPath()
-  ctx.arc(x, y, 2, 0, Math.PI * 2)
-  ctx.fillStyle = `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`
-  ctx.fill()
+    ctx.arc(x, y, 2, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(${COLOR}, ${alpha * METEOR_MAX_ALPHA})`
+    ctx.fill()
   }
 
   function drawAll() {
