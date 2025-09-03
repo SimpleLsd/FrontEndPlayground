@@ -2,7 +2,9 @@
 import {
   Menu as IconMenu,
   Location,
+  Plus,
   Setting,
+  Share,
 } from '@element-plus/icons-vue'
 
 // const isCollapse = ref(true)
@@ -56,15 +58,23 @@ function handleClose(key: string, keyPath: string[]) {
         </el-menu-item>
       </el-sub-menu>
     </el-sub-menu>
-    <el-menu-item index="/nav/2">
+    <el-menu-item index="/nav/ResizeTest">
+      <el-icon>
+        <Share />
+      </el-icon>
+      <template #title>
+        ResizeTest
+      </template>
+    </el-menu-item>
+    <el-menu-item index="/nav/MoveTest">
       <el-icon>
         <IconMenu />
       </el-icon>
       <template #title>
-        Navigator Two
+        MoveTest
       </template>
     </el-menu-item>
-    <el-menu-item index="mapTest">
+    <el-menu-item index="/nav/MapTest">
       <el-icon>
         <Location />
       </el-icon>
@@ -77,7 +87,7 @@ function handleClose(key: string, keyPath: string[]) {
         <Setting />
       </el-icon>
       <template #title>
-        Navigator Four
+        Css Test
       </template>
     </el-menu-item>
   </el-menu>

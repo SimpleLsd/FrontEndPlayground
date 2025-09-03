@@ -64,7 +64,7 @@ import { toggleDark } from '~/composables'
   </el-menu>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .el-menu-demo {
   &.ep-menu--horizontal > .ep-menu-item:nth-child(1) {
     margin-right: auto;

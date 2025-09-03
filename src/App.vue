@@ -6,14 +6,14 @@
     <BaseHeader />
     <div class="main-container flex">
       <BaseSide />
-      <div w="full" py="4">
+      <div w="full" py="0">
         <RouterView />
       </div>
     </div>
   </el-config-provider>
 </template>
 
-<style>
+<style scoped>
 #app {
   text-align: center;
   color: var(--ep-text-color-primary);
@@ -21,5 +21,6 @@
 
 .main-container {
   height: calc(100vh - var(--ep-menu-item-height) - 4px);
+  transition: all linear 150ms;
 }
 </style>
