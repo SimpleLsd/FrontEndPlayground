@@ -22,8 +22,8 @@ declare module 'vue-router/auto-routes' {
     '/nav/1/item-1': RouteRecordInfo<'/nav/1/item-1', '/nav/1/item-1', Record<never, never>, Record<never, never>>,
     '/nav/2': RouteRecordInfo<'/nav/2', '/nav/2', Record<never, never>, Record<never, never>>,
     '/nav/4': RouteRecordInfo<'/nav/4', '/nav/4', Record<never, never>, Record<never, never>>,
-    '/nav/MapTest': RouteRecordInfo<'/nav/MapTest', '/nav/MapTest', Record<never, never>, Record<never, never>>,
-    '/nav/MoveTest': RouteRecordInfo<'/nav/MoveTest', '/nav/MoveTest', Record<never, never>, Record<never, never>>,
+    '/nav/mapTest': RouteRecordInfo<'/nav/mapTest', '/nav/mapTest', Record<never, never>, Record<never, never>>,
+    '/nav/Move Test': RouteRecordInfo<'/nav/Move Test', '/nav/Move Test', Record<never, never>, Record<never, never>>,
     '/nav/ResizeTest': RouteRecordInfo<'/nav/ResizeTest', '/nav/ResizeTest', Record<never, never>, Record<never, never>>,
   }
 }

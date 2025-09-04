@@ -1,8 +1,15 @@
 <template>
   <div class="main">
     <div class="info">
-      页面宽度：{{ containerWidth }}px，经过计算的列数：{{ columnNum }}，
-      当前表单最小宽度：{{ formMinWidth }}px，以下板块使用计算网格布局，表单宽度严格大于300px
+      <span>
+        以下板块使用计算网格布局，表单容器宽度：{{ containerWidth }}px，计算的列数：{{ columnNum }}
+        <!-- ,{{ customFormWidth }},{{ typeof customFormWidth }} -->
+      </span>
+      <span class="input-group">
+        最小宽度设置
+        <!-- <input v-model="customFormWidth" type="number" class="info-input" value="360"> -->
+        <el-input-number v-model="customFormWidth" style="width: 120px" size="small" />
+      </span>
     </div>
     <div ref="formContainer" class="form-container-computed">
       <div v-for="i in 10" :key="i" class="form-item">
@@ -10,7 +17,7 @@
       </div>
     </div>
     <div class="info">
-      以下板块使用媒体识别控制列数，近似控制最小宽度
+      以下板块使用媒体识别控制列数
     </div>
     <div ref="formContainer" class="form-container-media">
       <div v-for="i in 10" :key="i" class="form-item">
@@ -21,18 +28,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, defineModel, onMounted, ref } from 'vue'
 
 const formContainer = ref<HTMLElement | null>(null)
 
 const containerWidth = ref(0)
 
-const formMinWidth: number = 360
+// const formMinWidth: number = 360
 const gap: number = 16
 const padding: number = 16
+const customFormWidth = defineModel<number>({ })
+customFormWidth.value = 360
 
 const columnNum = computed(() => {
-  return getColumnNum(formMinWidth, gap, containerWidth.value)
+  return getColumnNum(customFormWidth.value ? customFormWidth.value : 0, gap, containerWidth.value)
 })
 
 function getColumnNum(formMinWidth: number, gap: number, containerWidth: number): number {
@@ -71,6 +80,16 @@ onMounted(() => {
   background-color: #fff;
   padding: 16px;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.input-group {
+  display: flex;
+  gap: 6px;
+}
+.info-input {
+  width: 60px;
+  border: 1px solid #dcdfe6;
 }
 .form-container-computed {
   width: 100%;
