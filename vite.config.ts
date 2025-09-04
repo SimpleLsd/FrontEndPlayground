@@ -56,4 +56,5 @@ export default defineConfig({
     // TODO: workaround until they support native ESM
     noExternal: ['element-plus'],
   },
+  base: 'FrontEndPlayground',
 })
