@@ -11,10 +11,9 @@
         <el-input-number v-model="customFormWidth" style="width: 120px" size="small" />
       </span>
     </div>
+
     <div ref="formContainer" class="form-container-computed">
-      <div v-for="i in 10" :key="i" class="form-item">
-        Item {{ i }}
-      </div>
+      <el-input v-for="i in 10" :key="i" class="form-item" :placeholder="`item ${i}`" />
     </div>
     <div class="info">
       以下板块使用媒体识别控制列数
@@ -44,10 +43,6 @@ const columnNum = computed(() => {
   return getColumnNum(customFormWidth.value ? customFormWidth.value : 0, gap, containerWidth.value)
 })
 
-function getColumnNum(formMinWidth: number, gap: number, containerWidth: number): number {
-  return ~~((containerWidth + gap) / (formMinWidth + gap))
-}
-
 function updateContainerWidth() {
   if (formContainer.value) {
     containerWidth.value = formContainer.value.clientWidth - padding * 2
@@ -55,6 +50,10 @@ function updateContainerWidth() {
   else {
     containerWidth.value = 1000 // 回退值
   }
+}
+
+function getColumnNum(formMinWidth: number, gap: number, containerWidth: number): number {
+  return ~~((containerWidth + gap) / (formMinWidth + gap))
 }
 
 onMounted(() => {
